@@ -17,12 +17,12 @@ import java.util.List;
  *
  */
 
-public class BodyPartFragment extends Fragment {
+public class LegPartFragment extends Fragment {
 
     private List<Integer> mImageIds;
     private int mListIndex;
 
-    public BodyPartFragment(){
+    public LegPartFragment(){
 
     }
 
@@ -52,4 +52,5 @@ public class BodyPartFragment extends Fragment {
     public void setmListIndex(int selectedId){
         mListIndex = selectedId;
     }
+
 }
