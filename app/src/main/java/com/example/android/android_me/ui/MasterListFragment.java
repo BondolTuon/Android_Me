@@ -16,11 +16,13 @@
 
 package com.example.android.android_me.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.android_me.R;
@@ -37,9 +39,21 @@ public class MasterListFragment extends Fragment {
 
     // TODO (2) Override onAttach to make sure that the container activity has implemented the callback
 
+    OnImageClickListener mCallback;
+
+    interface OnImageClickListener{
+        void ItemClickCallback(int position);
+    }
+
 
     // Mandatory empty constructor
     public MasterListFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallback = (OnImageClickListener) context;
     }
 
     // Inflates the GridView of all AndroidMe images
@@ -54,10 +68,17 @@ public class MasterListFragment extends Fragment {
 
         // Create the adapter
         // This adapter takes in the context and an ArrayList of ALL the image resources to display
-        MasterListAdapter mAdapter = new MasterListAdapter(getContext(), AndroidImageAssets.getAll());
+        final MasterListAdapter mAdapter = new MasterListAdapter(getContext(), AndroidImageAssets.getAll());
 
         // Set the adapter on the GridView
         gridView.setAdapter(mAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCallback.ItemClickCallback(position);
+            }
+        });
 
         // TODO (3) Set a click listener on the gridView and trigger the callback onImageSelected when an item is clicked
 
